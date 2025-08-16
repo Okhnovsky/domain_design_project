@@ -1,7 +1,9 @@
+# pylint: disable=attribute-defined-outside-init
 from __future__ import annotations
 import abc
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.session import Session # noqa
 
 from allocation import config
 from allocation.adapters import repository
@@ -37,7 +39,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
         self.session_factory = session_factory
 
     def __enter__(self):
-        self.session = self.session_factory()
+        self.session = self.session_factory()  # type: Session
         self.batches = repository.SqlAlchemyRepository(self.session)
         return super().__enter__()
 

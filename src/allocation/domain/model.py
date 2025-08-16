@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date
-from typing import Optional, List
+from typing import Optional, List, Set # noqa
 
 
 class OutOfStock(Exception):
@@ -30,7 +30,7 @@ class Batch:
         self.sku = sku
         self.eta = eta
         self._purchased_quantity = qty
-        self._allocations = set()
+        self._allocations = set()  # type: Set[OrderLine]
 
     def __repr__(self):
         return f"<Batch {self.reference}>"
